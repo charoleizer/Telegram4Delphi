@@ -36,4 +36,4 @@ src/*.~*
 *.~*
 *.a
 *.stat
-unittest/*.ini~*
+unittest/configuration.ini
