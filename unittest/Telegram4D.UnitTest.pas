@@ -43,7 +43,7 @@ end;
 
 procedure TMyTestObject.Setup;
 begin
-  MyIniFile := TIniFile.Create(GetCurrentDir + '..\..\..\configuration.ini');
+  MyIniFile := TIniFile.Create(GetCurrentDir + '\configuration.ini');
 end;
 
 
