@@ -11,18 +11,19 @@ type
     baseURL: String;
     botToken: String;
     chat_id: String;
-    teste: String;
   end;
 
   ITelegram4D = interface
   ['{E00CF1E9-CD38-42A9-9C8E-1B2DB901D38A}']
     function getTelegram4DObject: TTelegram4DObject;
     function getMe: TJSONValue;
+    function sendMessage(TextMessage: String): TJSONValue;
   end;
 
   TTelegram4DImpl = class(TInterfacedObject, ITelegram4D)
     function getTelegram4DObject: TTelegram4DObject;
     function getMe: TJSONValue;
+    function sendMessage(TextMessage: String): TJSONValue;
 
   private
     FTelegram4DObject: TTelegram4DObject;
@@ -69,18 +70,36 @@ end;
 
 
 
+function TTelegram4DImpl.getTelegram4DObject: TTelegram4DObject;
+begin
+  Result := FTelegram4DObject;
+end;
+
+
+
 function TTelegram4DImpl.getMe: TJSONValue;
 begin
-  RESTClient.BaseURL := FTelegram4DObject.baseURL + FTelegram4DObject.botToken + '/getMe';
+  RESTClient.BaseURL :=
+    FTelegram4DObject.baseURL +
+    FTelegram4DObject.botToken + '/getMe';
+
   RESTRequest.Execute;
   Result := RESTResponse.JSONValue;
 end;
 
 
 
-function TTelegram4DImpl.getTelegram4DObject: TTelegram4DObject;
+function TTelegram4DImpl.sendMessage(TextMessage: String): TJSONValue;
 begin
-  Result := FTelegram4DObject;
+  { TODO : Implement to request with not required parameters too }
+  RESTClient.BaseURL :=
+    FTelegram4DObject.baseURL +
+    FTelegram4DObject.botToken + '/sendMessage?chat_id=' +
+    FTelegram4DObject.chat_id + '&text=' +
+    TextMessage;
+
+  RESTRequest.Execute;
+  Result := RESTResponse.JSONValue;
 end;
 
 end.
