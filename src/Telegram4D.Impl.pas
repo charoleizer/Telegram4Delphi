@@ -78,10 +78,12 @@ end;
 
 
 function TTelegram4DImpl.getMe: TJSONValue;
+const
+  _ENDPOINT = '/getMe';
 begin
   RESTClient.BaseURL :=
     FTelegram4DObject.baseURL +
-    FTelegram4DObject.botToken + '/getMe';
+    FTelegram4DObject.botToken + _ENDPOINT;
 
   RESTRequest.Execute;
   Result := RESTResponse.JSONValue;
@@ -90,13 +92,18 @@ end;
 
 
 function TTelegram4DImpl.sendMessage(TextMessage: String): TJSONValue;
+const
+  _ENDPOINT = '/sendMessage?';
+  _CHAT_ID =  'chat_id=';
+  _TEXT = 'text=';
+  _AND = '&';
 begin
-  { TODO : Implement to request with not required parameters too }
+  { TODO : Implement to request with all parameters }
   RESTClient.BaseURL :=
     FTelegram4DObject.baseURL +
-    FTelegram4DObject.botToken + '/sendMessage?chat_id=' +
-    FTelegram4DObject.chat_id + '&text=' +
-    TextMessage;
+    FTelegram4DObject.botToken +
+    _ENDPOINT + _CHAT_ID + FTelegram4DObject.chat_id + _AND +
+    _TEXT + TextMessage;
 
   RESTRequest.Execute;
   Result := RESTResponse.JSONValue;
